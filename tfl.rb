@@ -4,6 +4,8 @@ class Line
   #use of a class variable in order to group all the
   #instances in an array and find the line that includes
   #the destination station.
+  #Inspiration from here:
+  #http://stackoverflow.com/questions/6365638/how-to-get-class-instances-in-ruby
 
   @@all = []
 
@@ -87,25 +89,24 @@ def count_stops
     stops = count.abs
     puts "Between #{@dep_station} and #{@destination} there are #{stops}
     stops which are the following :"
-    puts @dep_line[(@dep_line.index(@dep_station)+1),count.abs].join(',')
+    # puts @dep_line[(@dep_line.index(@dep_station)+1),count.abs].join(',')
   else
+    #Solution for stations that exist in different lines
     #We call the class method collect_instances
     #in order to iterate over the array and find
     #in which line the destination station exists.
     @lines_array = Line.collect_instances
     @lines_array.each do |k|
-      dest_line=k.stations if k.stations.include?(@destination)
+      @dest_line=k.stations if k.stations.include?(@destination)
     end
-
-
-    # binding.pry
-    # binding.pry
-    #Solution for stations that exist in different lines
-    #Use of ObjectSpace to find all the instances of a class
-    # if @central.stations.include?(@destination)
-
-    puts "Dont know yet!"
-
+    count1 = @dep_line.index("Oxford Circus").to_i-@dep_line.index(@dep_station).to_i
+    stops1 = count1.abs
+    count2 = @dest_line.index("Oxford Circus").to_i-@dest_line.index(@destination).to_i
+    stops2 = count2.abs
+    stops = stops1+stops2
+    puts "Between #{@dep_station} and #{@destination} there are #{stops}
+    stops which are the following :"
+    # puts @dep_line[(@dep_line.index(@dep_station)+1),count.abs].join(',')
   end
 end
 
