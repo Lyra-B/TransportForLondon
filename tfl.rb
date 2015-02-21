@@ -89,7 +89,14 @@ def count_stops
     stops = count.abs
     puts "Between #{@dep_station} and #{@destination} there are #{stops}
     stops which are the following :"
-    # puts @dep_line[(@dep_line.index(@dep_station)+1),count.abs].join(',')
+    if @dep_line.index(@destination).to_i==@dep_line.index(@dep_station).to_i
+      puts "No stations to show!"
+    elsif @dep_line.index(@destination).to_i>@dep_line.index(@dep_station).to_i
+      puts @dep_line[(@dep_line.index(@dep_station)+1),count.abs].join(',')
+    else
+      @dep_line_rev = @dep_line.reverse
+      puts @dep_line_rev[(@dep_line_rev.index(@dep_station)),count.abs].join(',')
+    end
   else
     #Solution for stations that exist in different lines
     #We call the class method collect_instances
