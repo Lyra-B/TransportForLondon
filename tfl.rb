@@ -1,15 +1,36 @@
 require 'pry'
+class Line
+  attr_accessor :stations
 
-bakerloo = ["Elephant & Castle", "Lambeth North", "Waterloo", "Embankment",
-	"Charing Cross", "Picadilly Circus", "Oxford Circus", "Regent's Park",
-	"Baker Street"]
+  def initialize (*stations)
+    # binding.pry
+    self.stations = stations
+  end
+end
 
-central = ["Notting Hill Gate", "Queensway", "Lancaster Gate",
-	"Marble Arch", "Bond Street", "Oxford Circus", "Tottenham Court Road",
-	"Holborn", "Chancery Lane"]
+@bakerloo = Line.new("Elephant & Castle", "Lambeth North", "Waterloo", "Embankment",
+  "Charing Cross", "Picadilly Circus", "Oxford Circus", "Regent's Park",
+  "Baker Street")
+# binding.pry
+@central = Line.new("Notting Hill Gate", "Queensway", "Lancaster Gate",
+  "Marble Arch", "Bond Street", "Oxford Circus", "Tottenham Court Road",
+  "Holborn", "Chancery Lane")
+# binding.pry
 
-victoria = ["Kings Cross", "Euston", "Warren Street", "Oxford Circus",
-	"Green Park", "Victoria", "Pimlico"]
+@victoria = Line.new("Kings Cross", "Euston", "Warren Street", "Oxford Circus",
+  "Green Park", "Victoria", "Pimlico")
+# binding.pry
+
+# bakerloo = ["Elephant & Castle", "Lambeth North", "Waterloo", "Embankment",
+# 	"Charing Cross", "Picadilly Circus", "Oxford Circus", "Regent's Park",
+# 	"Baker Street"]
+
+# central = ["Notting Hill Gate", "Queensway", "Lancaster Gate",
+# 	"Marble Arch", "Bond Street", "Oxford Circus", "Tottenham Court Road",
+# 	"Holborn", "Chancery Lane"]
+
+# victoria = ["Kings Cross", "Euston", "Warren Street", "Oxford Circus",
+# 	"Green Park", "Victoria", "Pimlico"]
 
 # lines = {:bakerloo=> ["Elephant & Castle", "Lambeth North", "Waterloo",
 # 	"Embankment", "Charing Cross", "Picadilly Circus", "Oxford Circus",
@@ -29,26 +50,26 @@ from the stations above."
 
 case @dep_line
 when "1"
-  @dep_line = bakerloo
-  puts bakerloo.join(", ")
+  @dep_line = @bakerloo.stations
+  puts @bakerloo.stations.join(", ")
   puts second_question
   puts ">"
   @dep_station = gets.chomp
 when "2"
-  @dep_line = central
-  puts central.join(", ")
+  @dep_line = @central.stations
+  puts @central.stations.join(", ")
   puts second_question
   puts ">"
   @dep_station = gets.chomp.downcase
 when "3"
-  @dep_line = victoria
-  print victoria.join(", ")
+  @dep_line = @victoria.stations
+  print @victoria.stations.join(", ")
   puts second_question
   puts ">"
   @dep_station = gets.chomp.downcase
 end
 
-all_stations = bakerloo.join(", ") + central.join(", ") + victoria.join(", ")
+all_stations = @bakerloo.stations.join(", ") + @central.stations.join(", ") + @victoria.stations.join(", ")
 
 second_dest_question = "Which is your destination? Choose from the stations above."
 
