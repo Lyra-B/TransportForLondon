@@ -1,42 +1,66 @@
-bakerloo = ["ElephantNCastle", "Lambeth North", "Waterloo", "Embankment", 
-	"Charing Cross", "Picadilly Circus", "Oxford Circus", "Regent's Park", 
+bakerloo = ["Elephant & Castle", "Lambeth North", "Waterloo", "Embankment",
+	"Charing Cross", "Picadilly Circus", "Oxford Circus", "Regent's Park",
 	"Baker Street"]
 
-central = ["Notting Hill Gate", "Queensway", "Lancaster Gate", 
-	"Marble Arch", "Bond Street", "Oxford Circus", "Tottenham Court Road", 
+central = ["Notting Hill Gate", "Queensway", "Lancaster Gate",
+	"Marble Arch", "Bond Street", "Oxford Circus", "Tottenham Court Road",
 	"Holborn", "Chancery Lane"]
 
-victoria = ["Kings Cross", "Euston", "Warren Street", "Oxford Circus", 
-	"Green Park", "Victoria", "Pimlico"] 
+victoria = ["Kings Cross", "Euston", "Warren Street", "Oxford Circus",
+	"Green Park", "Victoria", "Pimlico"]
 
-	puts "Which line are you starting from? Bakerloo, Central or Victoria line?"
-	user_input = gets.chomp
-	if user_input == "bakerloo"
-		puts "Which station are you departing from? You can choose from the 
-		following stations:"
-		puts bakerloo.join(", ")
-	 	departure_station = gets.chomp
-	elsif user_input == "central"
-		puts "Which station are you departing from? You can choose from the 
-		following stations:"
-		puts central.join(", ")
-		departure_station = gets.chomp
-	elsif user_input == "victoria"
-		puts "Which stations are you departing from? You can choose from the 
-		following stations:" 
-		puts victoria.join(", ")
-		departure_station = gets.chomp
-    else 
-    	puts "I don't know this line. Please choose between Bakerloo, Central and 
-    	Victoria line."
+# lines = {:bakerloo=> ["Elephant & Castle", "Lambeth North", "Waterloo",
+# 	"Embankment", "Charing Cross", "Picadilly Circus", "Oxford Circus",
+# 	"Regent's Park","Baker Street"], :central=> ["Notting Hill Gate",
+# 	"Queensway", "Lancaster Gate", "Marble Arch", "Bond Street", "Oxford Circus",
+# 	"Tottenham Court Road", "Holborn", "Chancery Lane"], :victoria=> ["Kings
+# 	Cross", "Euston", "Warren Street", "Oxford Circus", "Green Park",
+# 	"Victoria", "Pimlico"]}
 
-    end
-    
-    puts "Which is your destination?"
-    destination = gets.chomp
+puts "Which line are you starting from? 1.Bakerloo, 2.Central or 3.Victoria
+ line? Choose 1,2 or 3"
+puts ">"
+dep_line = gets.chomp
 
-    # stops = 0
-    # def count_stops 
-    	
+second_question = "Which station are you departing from? You can choose
+from the stations above."
 
-    # end
+case dep_line
+when "1"
+  puts bakerloo.join(", ")
+  puts second_question
+  puts ">"
+  dep_station = gets.chomp.downcase
+when "2"
+  puts central.join(", ")
+  puts second_question
+  puts ">"
+  dep_station = gets.chomp.downcase
+when "3"
+  print victoria.join(", ")
+  puts second_question
+  puts ">"
+  dep_station = gets.chomp.downcase
+end
+
+all_stations = bakerloo.join(", ") + central.join(", ") + victoria.join(", ")
+
+second_dest_question = "Which is your destination? Choose from the stations above."
+
+puts all_stations
+puts second_dest_question
+
+destination = gets.chomp
+
+
+def count_stops(destination)
+  count = dep_line.index('destination')-dep_line.index('departure_station')
+  stops = count.abs
+  puts "Between #{dep_station} and #{destination} there are #{stops}
+  stops which are the following :"
+  print gsub(user_input.index('dep_station'),count.abs)
+end
+
+count_stops(user_dest)
+
+#user_input.downcase.gsub(" ","").to_sym
