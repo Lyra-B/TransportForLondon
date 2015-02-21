@@ -1,10 +1,32 @@
 require 'pry'
 class Line
   attr_accessor :stations
+  #use of a class variable in order to group all the
+  #instances in an array and find the line that includes
+  #the destination station.
+
+  @@all = []
 
   def initialize (*stations)
-    # binding.pry
     self.stations = stations
+    # binding.pry
+    @@all << self
+
+  end
+
+  def self.collect_instances
+    # binding.pry
+    @@all
+  end
+
+  # def self.collect_instances
+  #   @instances = [];
+  #   @instances << self
+  #   @instances
+  # end
+
+  def set_station
+    puts "Hello world!"
   end
 end
 
@@ -15,30 +37,9 @@ end
 @central = Line.new("Notting Hill Gate", "Queensway", "Lancaster Gate",
   "Marble Arch", "Bond Street", "Oxford Circus", "Tottenham Court Road",
   "Holborn", "Chancery Lane")
-# binding.pry
 
 @victoria = Line.new("Kings Cross", "Euston", "Warren Street", "Oxford Circus",
   "Green Park", "Victoria", "Pimlico")
-# binding.pry
-
-# bakerloo = ["Elephant & Castle", "Lambeth North", "Waterloo", "Embankment",
-# 	"Charing Cross", "Picadilly Circus", "Oxford Circus", "Regent's Park",
-# 	"Baker Street"]
-
-# central = ["Notting Hill Gate", "Queensway", "Lancaster Gate",
-# 	"Marble Arch", "Bond Street", "Oxford Circus", "Tottenham Court Road",
-# 	"Holborn", "Chancery Lane"]
-
-# victoria = ["Kings Cross", "Euston", "Warren Street", "Oxford Circus",
-# 	"Green Park", "Victoria", "Pimlico"]
-
-# lines = {:bakerloo=> ["Elephant & Castle", "Lambeth North", "Waterloo",
-# 	"Embankment", "Charing Cross", "Picadilly Circus", "Oxford Circus",
-# 	"Regent's Park","Baker Street"], :central=> ["Notting Hill Gate",
-# 	"Queensway", "Lancaster Gate", "Marble Arch", "Bond Street", "Oxford Circus",
-# 	"Tottenham Court Road", "Holborn", "Chancery Lane"], :victoria=> ["Kings
-# 	Cross", "Euston", "Warren Street", "Oxford Circus", "Green Park",
-# 	"Victoria", "Pimlico"]}
 
 puts "Which line are you starting from? 1.Bakerloo, 2.Central or 3.Victoria
  line? Choose 1,2 or 3"
@@ -79,13 +80,35 @@ puts second_dest_question
 @destination = gets.chomp
 
 def count_stops
-  # binding.pry
-  count = @dep_line.index(@destination).to_i-@dep_line.index(@dep_station).to_i
-  stops = count.abs
-  puts "Between #{@dep_station} and #{@destination} there are #{stops}
-  stops which are the following :"
-  puts @dep_line[(@dep_line.index(@dep_station)+1),count.abs].join(',')
+  #Solution for stations that exist in the same line
+  if @dep_line.include?(@destination)
+    # binding.pry
+    count = @dep_line.index(@destination).to_i-@dep_line.index(@dep_station).to_i
+    stops = count.abs
+    puts "Between #{@dep_station} and #{@destination} there are #{stops}
+    stops which are the following :"
+    puts @dep_line[(@dep_line.index(@dep_station)+1),count.abs].join(',')
+  else
+    #We call the class method collect_instances
+    #in order to iterate over the array and find
+    #in which line the destination station exists.
+    @lines_array = Line.collect_instances
+    @lines_array.each do |k|
+      dest_line=k.stations if k.stations.include?(@destination)
+    end
+
+
+    # binding.pry
+    # binding.pry
+    #Solution for stations that exist in different lines
+    #Use of ObjectSpace to find all the instances of a class
+    # if @central.stations.include?(@destination)
+
+    puts "Dont know yet!"
+
+  end
 end
+
 
 count_stops
 
