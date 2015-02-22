@@ -11,35 +11,21 @@ class Line
 
   def initialize (*stations)
     self.stations = stations
-    # binding.pry
     @@all << self
 
   end
 
   def self.collect_instances
-    # binding.pry
     @@all
-  end
-
-  # def self.collect_instances
-  #   @instances = [];
-  #   @instances << self
-  #   @instances
-  # end
-
-  def set_station
-    puts "Hello world!"
   end
 end
 
 @bakerloo = Line.new("Elephant & Castle", "Lambeth North", "Waterloo", "Embankment",
   "Charing Cross", "Picadilly Circus", "Oxford Circus", "Regent's Park",
   "Baker Street")
-# binding.pry
 @central = Line.new("Notting Hill Gate", "Queensway", "Lancaster Gate",
   "Marble Arch", "Bond Street", "Oxford Circus", "Tottenham Court Road",
   "Holborn", "Chancery Lane")
-
 @victoria = Line.new("Kings Cross", "Euston", "Warren Street", "Oxford Circus",
   "Green Park", "Victoria", "Pimlico")
 
@@ -53,52 +39,16 @@ puts "Which is your destination? Choose from the stations above."
 puts ">"
 @destination = gets.chomp
 
-
+#We call the class method collect_instances
+#in order to iterate over the array and find
+#in which line the destination station and
+#the departure station exists.
 @lines_array = Line.collect_instances
 @lines_array.each do |k|
   @dep_line =k.stations if k.stations.include?(@dep_station)
   @dest_line=k.stations if k.stations.include?(@destination)
 end
 
-
-# puts "Which line are you starting from? 1.Bakerloo, 2.Central or 3.Victoria
-#  line? Choose 1,2 or 3"
-# puts ">"
-# @dep_line = gets.chomp
-
-# second_question = "Which station are you departing from? You can choose
-# from the stations above."
-
-# case @dep_line
-# when "1"
-#   @dep_line = @bakerloo.stations
-#   puts @bakerloo.stations.join(", ")
-#   puts second_question
-#   puts ">"
-#   @dep_station = gets.chomp
-# when "2"
-#   @dep_line = @central.stations
-#   puts @central.stations.join(", ")
-#   puts second_question
-#   puts ">"
-#   @dep_station = gets.chomp
-# when "3"
-#   @dep_line = @victoria.stations
-#   print @victoria.stations.join(", ")
-#   puts second_question
-#   puts ">"
-#   @dep_station = gets.chomp
-# end
-
-
-
-# all_stations = @bakerloo.stations.join(", ") + "," + @central.stations.join(", ") + "," + @victoria.stations.join(", ")
-# second_dest_question = "Which is your destination? Choose from the stations above."
-
-# puts all_stations
-# puts second_dest_question
-
-# @destination = gets.chomp
 
 
 def count_stops
@@ -117,13 +67,6 @@ def count_stops
     end
   else
     #Solution for stations that exist in different lines
-    #We call the class method collect_instances
-    #in order to iterate over the array and find
-    #in which line the destination station exists.
-    # @lines_array = Line.collect_instances
-    # @lines_array.each do |k|
-    #   @dest_line=k.stations if k.stations.include?(@destination)
-    # end
     count1 = @dep_line.index("Oxford Circus").to_i-@dep_line.index(@dep_station).to_i
     stops1 = count1.abs
     count2 = @dest_line.index("Oxford Circus").to_i-@dest_line.index(@destination).to_i
@@ -155,7 +98,4 @@ def count_stops
   end
 end
 
-
 count_stops
-
-#user_input.downcase.gsub(" ","").to_sym
