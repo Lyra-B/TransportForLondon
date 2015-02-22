@@ -63,16 +63,16 @@ when "2"
   puts @central.stations.join(", ")
   puts second_question
   puts ">"
-  @dep_station = gets.chomp.downcase
+  @dep_station = gets.chomp
 when "3"
   @dep_line = @victoria.stations
   print @victoria.stations.join(", ")
   puts second_question
   puts ">"
-  @dep_station = gets.chomp.downcase
+  @dep_station = gets.chomp
 end
 
-all_stations = @bakerloo.stations.join(", ") + @central.stations.join(", ") + @victoria.stations.join(", ")
+all_stations = @bakerloo.stations.join(", ") + "," + @central.stations.join(", ") + "," + @victoria.stations.join(", ")
 
 second_dest_question = "Which is your destination? Choose from the stations above."
 
@@ -95,7 +95,7 @@ def count_stops
       puts @dep_line[(@dep_line.index(@dep_station)+1),count.abs].join(',')
     else
       @dep_line_rev = @dep_line.reverse
-      puts @dep_line_rev[(@dep_line_rev.index(@dep_station)),count.abs].join(',')
+      puts @dep_line_rev[(@dep_line_rev.index(@dep_station)+1),count.abs].join(',')
     end
   else
     #Solution for stations that exist in different lines
@@ -113,7 +113,28 @@ def count_stops
     stops = stops1+stops2
     puts "Between #{@dep_station} and #{@destination} there are #{stops}
     stops which are the following :"
-    # puts @dep_line[(@dep_line.index(@dep_station)+1),count.abs].join(',')
+    @dep_line_rev = @dep_line.reverse
+    @dest_line_rev = @dest_line.reverse
+    oxford_dep = @dep_line.index("Oxford Circus").to_i
+    oxford_dep_rev = @dep_line_rev.index("Oxford Circus").to_i
+    oxford_dest = @dest_line.index("Oxford Circus").to_i
+    oxford_dest_rev = @dest_line_rev.index("Oxford Circus").to_i
+    dep = @dep_line.index(@dep_station).to_i
+    dep_r = @dep_line_rev.index(@dep_station).to_i
+    dest = @dest_line.index(@destination).to_i
+    dest_r = @dest_line_rev.index(@destination).to_i
+    if dep<oxford_dep
+      sub_arr1 = @dep_line[(dep+1), (oxford_dep-dep)].join(',')
+    else
+      sub_arr1 = @dep_line_rev[(dep_r+1), (oxford_dep_rev-dep_r)].join(',')
+    end
+    if dest<oxford_dest
+      sub_arr2 = (@dest_line[dest, (oxford_dest - dest)]).reverse.join(',')
+    else
+      sub_arr2 = (@dest_line_rev[dest_r, ((oxford_dest_rev - dest_r)-1)]).reverse.join(',')
+    end
+    puts sub_arr1 + "," + sub_arr2
+    puts "Change line at Oxford Circus."
   end
 end
 
