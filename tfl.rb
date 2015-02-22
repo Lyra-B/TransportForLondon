@@ -43,52 +43,70 @@ end
 @victoria = Line.new("Kings Cross", "Euston", "Warren Street", "Oxford Circus",
   "Green Park", "Victoria", "Pimlico")
 
-puts "Which line are you starting from? 1.Bakerloo, 2.Central or 3.Victoria
- line? Choose 1,2 or 3"
+all_stations = @bakerloo.stations.join(", ") + "," + @central.stations.join(", ") + "," + @victoria.stations.join(", ")
+puts all_stations
+puts "Which station are you departing from? Choose from the stations above."
 puts ">"
-@dep_line = gets.chomp
+@dep_station = gets.chomp
+puts all_stations
+puts "Which is your destination? Choose from the stations above."
+puts ">"
+@destination = gets.chomp
 
-second_question = "Which station are you departing from? You can choose
-from the stations above."
 
-case @dep_line
-when "1"
-  @dep_line = @bakerloo.stations
-  puts @bakerloo.stations.join(", ")
-  puts second_question
-  puts ">"
-  @dep_station = gets.chomp
-when "2"
-  @dep_line = @central.stations
-  puts @central.stations.join(", ")
-  puts second_question
-  puts ">"
-  @dep_station = gets.chomp
-when "3"
-  @dep_line = @victoria.stations
-  print @victoria.stations.join(", ")
-  puts second_question
-  puts ">"
-  @dep_station = gets.chomp
+@lines_array = Line.collect_instances
+@lines_array.each do |k|
+  @dep_line =k.stations if k.stations.include?(@dep_station)
+  @dest_line=k.stations if k.stations.include?(@destination)
 end
 
-all_stations = @bakerloo.stations.join(", ") + "," + @central.stations.join(", ") + "," + @victoria.stations.join(", ")
 
-second_dest_question = "Which is your destination? Choose from the stations above."
+# puts "Which line are you starting from? 1.Bakerloo, 2.Central or 3.Victoria
+#  line? Choose 1,2 or 3"
+# puts ">"
+# @dep_line = gets.chomp
 
-puts all_stations
-puts second_dest_question
+# second_question = "Which station are you departing from? You can choose
+# from the stations above."
 
-@destination = gets.chomp
+# case @dep_line
+# when "1"
+#   @dep_line = @bakerloo.stations
+#   puts @bakerloo.stations.join(", ")
+#   puts second_question
+#   puts ">"
+#   @dep_station = gets.chomp
+# when "2"
+#   @dep_line = @central.stations
+#   puts @central.stations.join(", ")
+#   puts second_question
+#   puts ">"
+#   @dep_station = gets.chomp
+# when "3"
+#   @dep_line = @victoria.stations
+#   print @victoria.stations.join(", ")
+#   puts second_question
+#   puts ">"
+#   @dep_station = gets.chomp
+# end
+
+
+
+# all_stations = @bakerloo.stations.join(", ") + "," + @central.stations.join(", ") + "," + @victoria.stations.join(", ")
+# second_dest_question = "Which is your destination? Choose from the stations above."
+
+# puts all_stations
+# puts second_dest_question
+
+# @destination = gets.chomp
+
 
 def count_stops
   #Solution for stations that exist in the same line
   if @dep_line.include?(@destination)
-    # binding.pry
     count = @dep_line.index(@destination).to_i-@dep_line.index(@dep_station).to_i
     stops = count.abs
-    puts "Between #{@dep_station} and #{@destination} there are #{stops}
-    stops which are the following :"
+    puts "Between #{@dep_station} and #{@destination} there are #{stops} stops which are the following :"
     if @dep_line.index(@destination).to_i==@dep_line.index(@dep_station).to_i
       puts "No stations to show!"
     elsif @dep_line.index(@destination).to_i>@dep_line.index(@dep_station).to_i
@@ -102,17 +120,16 @@ def count_stops
     #We call the class method collect_instances
     #in order to iterate over the array and find
     #in which line the destination station exists.
-    @lines_array = Line.collect_instances
-    @lines_array.each do |k|
-      @dest_line=k.stations if k.stations.include?(@destination)
-    end
+    # @lines_array = Line.collect_instances
+    # @lines_array.each do |k|
+    #   @dest_line=k.stations if k.stations.include?(@destination)
+    # end
     count1 = @dep_line.index("Oxford Circus").to_i-@dep_line.index(@dep_station).to_i
     stops1 = count1.abs
     count2 = @dest_line.index("Oxford Circus").to_i-@dest_line.index(@destination).to_i
     stops2 = count2.abs
     stops = stops1+stops2
-    puts "Between #{@dep_station} and #{@destination} there are #{stops}
-    stops which are the following :"
+    puts "Between #{@dep_station} and #{@destination} there are #{stops} stops which are the following :"
     @dep_line_rev = @dep_line.reverse
     @dest_line_rev = @dest_line.reverse
     oxford_dep = @dep_line.index("Oxford Circus").to_i
